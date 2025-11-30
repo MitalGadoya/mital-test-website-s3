@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Creates a public S3 bucket for static website hosting"
+
+Parameters:
+  BucketName:
+    Type: String
+    Description: "Name of the S3 bucket"
+    Default: mital-test-website-s3
+
+Resources:
+
+  StaticSiteBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true  # Block ACLs from being set publicly
+        IgnorePublicAcls: true  # Ignore any existing public ACLs
+        BlockPublicPolicy: false  # Block public policies
+        RestrictPublicBuckets: false
+ 
+
+  StaticSiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref StaticSiteBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: PublicReadForGetBucketObjects
+            Effect: Allow
+            Principal: "*"
+            Action: "s3:GetObject"
+            Resource: !Sub "${StaticSiteBucket.Arn}/*"
+
+Outputs:
+  WebsiteURL:
+    Description: "The S3 Static Website URL"
+    Value: !GetAtt StaticSiteBucket.WebsiteURL
+
+  BucketNameOutput:
+    Description: "Name of the created S3 bucket"
+    Value: !Ref StaticSiteBucket

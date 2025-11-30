@@ -1,6 +1,7 @@
 # My Static Website on Amazon S3
 
-This project hosts a static website on Amazon S3, stored in the `mital-test-website-s3` bucket within AWS. The current setup involves manually placing the website files into the S3 bucket, but a more automated approach using CI/CD pipelines is planned for future improvements.
+This project hosts a static website on Amazon S3, stored in the `mital-test-website-s3` bucket within AWS. The current setup involves manually placing the website files into the S3 bucket, but a more automated approach using CI/CD pipelines can be implemented with more time.
+URL: http://mital-test-website-s3.s3-website-us-east-1.amazonaws.com/
 
 ## Ideal Project Setup
 
@@ -12,7 +13,7 @@ The intended infrastructure setup will involve the following:
 In a real-world production setup, the following components will be implemented:
 
 - **Private S3 Bucket**: The S3 bucket will be set to private to prevent direct access to content.
-- **CloudFront Distribution**: CloudFront will cache static content, improving performance and scalability.
+- **CloudFront Distribution**: CloudFront will cache static content, improving performance and scalability. It will also have TLS certificate installed and AWS WAF configured for security
 - **Route 53 Configuration**:
   - A public hosted zone will be created in Route 53.
   - A purchased domain will be pointed to the CloudFront distribution via Route 53 DNS records (e.g., `mitalwebsite.com`).
@@ -26,7 +27,7 @@ In a real-world production setup, the following components will be implemented:
 
 ### What else would you do with your website if you had more time?
 
-If given more time, the focus would be on implementing a secure and automated deployment pipeline, following a **shift-left approach** for security. This would involve adding security controls earlier in the CI/CD pipeline, ensuring that vulnerabilities are identified and mitigated before they reach production.
+If given more time, the focus would be on implementing a secure and automated deployment pipeline, following a **shift-left approach** for security. This would involve adding security controls earlier in the CI/CD pipeline, ensuring that vulnerabilities are identified and mitigated before they reach production. (Apart for TLS certificate and WAF configuration)
 
 ### What alternative solutions did you consider?
 

@@ -11,8 +11,8 @@ URL: http://mital-test-website-s3.s3-website-us-east-1.amazonaws.com/
 
 The repository has 2 subdirectories.
 
-- **infrastrucutre: This subdirectory contains infrastructure provisioning templates
-- **app: This contains application code
+- **infrastrucutre**: This subdirectory contains infrastructure provisioning templates
+- **app**: This subdirectory contains application code
 
 
 ## Ideal Project Setup (TO DO)

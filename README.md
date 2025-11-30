@@ -2,16 +2,27 @@
 
 This project hosts a static website on Amazon S3, stored in the `mital-test-website-s3` bucket within AWS. The current setup involves manually placing the website files into the S3 bucket, but a more automated approach using CI/CD pipelines can be implemented with more time.
 
+## How to Access
+
+Enter the following URL in the browser.
 URL: http://mital-test-website-s3.s3-website-us-east-1.amazonaws.com/
 
-## Ideal Project Setup
+## Repository Structure
 
-The intended infrastructure setup will involve the following:
+The repository has 2 subdirectories.
+
+- **infrastrucutre: This subdirectory contains infrastructure provisioning templates
+- **app: This contains application code
+
+
+## Ideal Project Setup (TO DO)
+
+For production scale, the intended infrastructure setup should involve the following:
 
 - **CI/CD Infrastructure Pipeline**: This pipeline will automate provisioning of the insfrastructure resources, utilizing GitHub Actions or other CI/CD tools with CFN or terraform
 - **Application Content Deployment Pipeline**: This pipeline will be used for the application content deployment.
 
-In a real-world production setup, infrastructure should be setup in the following way.
+For real-world production setup, infrastructure should be setup in the following way.
 
 - **Only Private S3 Bucket**: The S3 bucket policy/ACL should be set to block public access.
 - **CloudFront Distribution**: CloudFront distribution with TLS certificate for HTTPS and AWS WAF should be implemented.
@@ -29,7 +40,7 @@ In a real-world production setup, infrastructure should be setup in the followin
 
 ### What else would you do with your website if you had more time?
 
-If given more time, the focus would be on implementing a secure and automated deployment pipeline, following a **shift-left approach** for security. This would involve adding security controls earlier in the CI/CD pipeline, ensuring that vulnerabilities are identified and mitigated before they reach production. (Apart for Cloudfront, TLS certificate and WAF configuration)
+If given more time, the focus would be on implementing a secure and automated deployment pipeline, following a **shift-left approach** for security. This would involve adding autometed application testing andinfrastructure security controls earlier in the CI/CD pipeline, ensuring that vulnerabilities are identified and mitigated before they reach production. (Apart for Cloudfront, TLS certificate and WAF configuration)
 
 ### What alternative solutions did you consider?
 

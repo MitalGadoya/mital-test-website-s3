@@ -1,33 +1,35 @@
 # My Static Website on Amazon S3
 
 This project hosts a static website on Amazon S3, stored in the `mital-test-website-s3` bucket within AWS. The current setup involves manually placing the website files into the S3 bucket, but a more automated approach using CI/CD pipelines can be implemented with more time.
+
 URL: http://mital-test-website-s3.s3-website-us-east-1.amazonaws.com/
 
 ## Ideal Project Setup
 
 The intended infrastructure setup will involve the following:
 
-- **CI/CD Infrastructure Pipeline**: This pipeline will automate the provisioning of resources, utilizing GitHub Actions or other CI/CD tools.
-- **Separate CI/CD Application Content Deployment Pipeline**: This pipeline will handle the deployment of this page and other application assets to S3 or other infrastructure components.
+- **CI/CD Infrastructure Pipeline**: This pipeline will automate provisioning of the insfrastructure resources, utilizing GitHub Actions or other CI/CD tools with CFN or terraform
+- **Application Content Deployment Pipeline**: This pipeline will be used for the application content deployment.
 
-In a real-world production setup, the following components will be implemented:
+In a real-world production setup, infrastructure should be setup in the following way.
 
-- **Private S3 Bucket**: The S3 bucket will be set to private to prevent direct access to content.
-- **CloudFront Distribution**: CloudFront will cache static content, improving performance and scalability. It will also have TLS certificate installed and AWS WAF configured for security
-- **Route 53 Configuration**:
-  - A public hosted zone will be created in Route 53.
-  - A purchased domain will be pointed to the CloudFront distribution via Route 53 DNS records (e.g., `mitalwebsite.com`).
-- **CloudFront WAF**: CloudFront will be secured with Web Application Firewall (WAF) for OWASP Top 10 protections and other custom rules.
-- **CloudFront Origins**: CloudFront will define multiple origins based on subdomains or paths, such as:
+- **Only Private S3 Bucket**: The S3 bucket policy/ACL should be set to block public access.
+- **CloudFront Distribution**: CloudFront distribution with TLS certificate for HTTPS and AWS WAF should be implemented.
+- **CloudFront WAF**: CloudFront should be secured with Web Application Firewall (WAF) for OWASP Top 10 protections and other custom rules.
+- **CloudFront Origins**: CloudFront should define multiple origins based on subdomains or paths  as application grows for real time. Such as - 
   - `mitalwebsite.com/app` → Public Load Balancer
   - `mitalwebsite.com/api` → API Gateway
   - `static.mitalwebsite.com` or `/static` → Static Content
+- **Route 53 Configuration**:
+  - A public hosted zone should be created in Route 53.
+  - A purchased domain should be pointing to the CloudFront distribution via Route 53 DNS record (e.g., `mitalwebsite.com`).
+
 
 ## Q&A
 
 ### What else would you do with your website if you had more time?
 
-If given more time, the focus would be on implementing a secure and automated deployment pipeline, following a **shift-left approach** for security. This would involve adding security controls earlier in the CI/CD pipeline, ensuring that vulnerabilities are identified and mitigated before they reach production. (Apart for TLS certificate and WAF configuration)
+If given more time, the focus would be on implementing a secure and automated deployment pipeline, following a **shift-left approach** for security. This would involve adding security controls earlier in the CI/CD pipeline, ensuring that vulnerabilities are identified and mitigated before they reach production. (Apart for Cloudfront, TLS certificate and WAF configuration)
 
 ### What alternative solutions did you consider?
 
@@ -53,7 +55,7 @@ To transform this into a production-grade website, the following management aspe
    - Deploy services to ECS (Elastic Container Service) or EKS (Elastic Kubernetes Service).
 
 4. **Data Management**:
-   - Implement secure and scalable databases for structured, semi-structured, and unstructured data.
+   - Implement secure and scalable databases for structured, semi-structured, and unstructured data hosting.
 
 5. **Backup Management**:
    - Establish a robust backup and disaster recovery strategy for both data and application components.

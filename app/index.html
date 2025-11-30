@@ -1,116 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Mital Gadoya's S3 Static Website</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            line-height: 1.6;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-        h1 {
-            color: #2a4d69;
-        }
-        h2 {
-            color: #2a4d69;
-        }
-        .container {
-            max-width: 900px;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        ul, ol {
-            margin-left: 20px;
-        }
-        li {
-            margin-bottom: 10px;
-        }
-        code {
-            background-color: #eee;
-            padding: 2px 5px;
-            border-radius: 4px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Static Website on Amazon S3</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #e0f7fa; /* Light background color */
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background-color: #007bff; /* Blue background for the header */
+      color: #fff; /* White text for contrast */
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adding a shadow for better visibility */
+    }
+    h1, h2, h3 {
+      color: #333;
+    }
+    section {
+      padding: 20px;
+      margin: 20px;
+      background-color: #fff; /* White background for sections */
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow on sections */
+    }
+    ul {
+      margin-left: 20px;
+    }
+    code {
+      background-color: #f0f0f0;
+      padding: 5px;
+      border-radius: 3px;
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #007bff; /* Blue footer background */
+      color: #fff;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to My Static Website on Amazon S3!</h1>
-        <h1> URL: http://mital-test-website-s3.s3-website-us-east-1.amazonaws.com/ </h1>
 
-        <p>
-            This page is hosted in the <strong>mital-test-website-s3</strong> bucket in AWS.  
-            A CloudFormation stack creates this S3 bucket. Currently, placement of this file into the bucket is manual.
+<header>
+  <h1>My Static Website on Amazon S3</h1>
+</header>
 
-        </p>
+<section>
+  <h2>Overview</h2>
+  <p>This project hosts a static website on Amazon S3, stored in the <code>mital-test-website-s3</code> bucket within AWS. The current setup involves manually placing the website files into the S3 bucket, but a more automated approach using CI/CD pipelines can be implemented with more time.</p>
+</section>
 
-        <h2>Ideal Project Setup</h2>
-        <ol>
-            <li>
-                I will have CI/CD tools provisioning the infrastructure, such as GitHub workflows/actions for the application through an infrastructure pipeline.
-            </li>
-            <li>
-                I will have a separate CI/CD pipeline for application content deployment. This pipeline will deploy this page along with other application content to S3 or other infrastructure components.
-            </li>
-            <li>
-                Although the S3 bucket is public in this demo, in a real-world setup:
-                <ul>
-                    <li>Make S3 bucket private.</li>
-                    <li>Create CloudFront to cache static content.</li>
-                    <li>Create Route53 public hosted zone and point the purchased domain to its name servers.</li>
-                    <li>Create Route53 record <code>mitalwebsite.com</code> pointing to the CloudFront URL.</li>
-                    <li>Enable CloudFront WAF configuration for OWASP Top 10 protections and other rules.</li>
-                    <li>CloudFront defines an origin for the private S3 bucket and serves content securely.</li>
-                    <li>CloudFront may have multiple origins based on subdomains or paths:
-                        <ul>
-                            <li><code>mitalwebsite.com/app</code> → Public Load Balancer</li>
-                            <li><code>mitalwebsite.com/api</code> → API Gateway</li>
-                            <li><code>static.mitalwebsite.com</code> or <code>/static</code> → Static content</li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ol>
+<section>
+  <h2>How to Access</h2>
+  <p>Enter the following URL in the browser to access the static website:</p>
+  <p><a href="http://mital-test-website-s3.s3-website-us-east-1.amazonaws.com/" target="_blank">http://mital-test-website-s3.s3-website-us-east-1.amazonaws.com/</a></p>
+</section>
 
-        <h2>Q&A</h2>
-        <ul>
-            <li>
-                <strong>What else would you do with your website if you had more time?</strong><br>
-                I would implement the above as a starting point for security and embed similar controls in the pipeline for a shift-left approach.
-            </li>
-            <li>
-                <strong>Alternative solutions considered:</strong><br>
-                I could have hosted static pages on an Apache web server fronted by an ALB, but that's expensive and unnecessary at this stage. Authentication and authorization would be added as the website grows.
-            </li>
-            <li>
-                <strong>What would be required to make this a production-grade website?</strong><br>
-                I would layer the website into the following management aspects for production:
-                <ol type="1">
-                    <li>
-                        <strong>Identity and Access Management(Security):</strong> IAM for infrastructure and applications, AWS Cognito or Ping Identity, MFA, and least-privilege policies.
-                    </li>
-                    <li>
-                        <strong>Network Management(Security):</strong> VPC, Ingress/Egress controls, Firewalls, VPNs, WAF, AWS Shield, IDS/IPS/Web Filtering.
-                    </li>
-                    <li>
-                        <strong>Application Management:</strong> Microservices hosted in separate repositories, Dockerized with multi-stage builds, deployed to ECS or EKS.
-                    </li>
-                    <li>
-                        <strong>Data Management:</strong> Databases (structured, semi-structured, unstructured) in secure infrastructure.
-                    </li>
-                    <li>
-                        <strong>Backup Management:</strong> Appropriate backup strategies for data and app backup & restore.
-                    </li>
-                </ol>
-            </li>
-        </ul>
-        <p>
-            <u><i>Disclaimer: AI is only used to improve readability of this page.</i></u>
-        </p>
-    </div>
+<section>
+  <h2>Repository Structure</h2>
+  <p>The repository has two subdirectories:</p>
+  <ul>
+    <li><strong>infrastructure</strong>: This subdirectory contains infrastructure provisioning templates.</li>
+    <li><strong>app</strong>: This subdirectory contains application code.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Ideal Project Setup (TO DO)</h2>
+  <p>For production scale, the intended infrastructure setup should involve the following:</p>
+  <ul>
+    <li><strong>CI/CD Infrastructure Pipeline</strong>: This pipeline will automate provisioning of the infrastructure resources, utilizing GitHub Actions or other CI/CD tools with CFN or Terraform.</li>
+    <li><strong>Application Content Deployment Pipeline</strong>: This pipeline will be used for the application content deployment.</li>
+  </ul>
+  <p>For a real-world production setup, infrastructure should be set up in the following way:</p>
+  <ul>
+    <li><strong>Only Private S3 Bucket</strong>: The S3 bucket policy/ACL should be set to block public access.</li>
+    <li><strong>CloudFront Distribution</strong>: CloudFront distribution with TLS certificate for HTTPS and AWS WAF should be implemented.</li>
+    <li><strong>CloudFront WAF</strong>: CloudFront should be secured with Web Application Firewall (WAF) for OWASP Top 10 protections and other custom rules.</li>
+    <li><strong>CloudFront Origins</strong>: CloudFront should define multiple origins based on subdomains or paths as the application grows. Such as:
+      <ul>
+        <li>mitalwebsite.com/app → Public Load Balancer</li>
+        <li>mitalwebsite.com/api → API Gateway</li>
+        <li>static.mitalwebsite.com or /static → Static Content</li>
+      </ul>
+    </li>
+    <li><strong>Route 53 Configuration</strong>: 
+      <ul>
+        <li>A public hosted zone should be created in Route 53.</li>
+        <li>A purchased domain should be pointing to the CloudFront distribution via Route 53 DNS record (e.g., mitalwebsite.com).</li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>Q&A</h2>
+  <h3>What else would you do with your website if you had more time?</h3>
+  <p>If given more time, the focus would be on implementing a secure and automated deployment pipeline, following a shift-left approach for security. This would involve adding automated application testing and infrastructure security controls earlier in the CI/CD pipeline, ensuring that vulnerabilities are identified and mitigated before they reach production. (Apart from CloudFront, TLS certificate, and WAF configuration).</p>
+
+  <h3>What alternative solutions did you consider?</h3>
+  <p>While hosting static pages on an Apache web server behind an Application Load Balancer (ALB) was an option, it was deemed unnecessary and costly for this simple demo project. Authentication and authorization mechanisms would be incorporated as the website evolves.</p>
+
+  <h3>What would be required to make this a production-grade website?</h3>
+  <p>To transform this into a production-grade website, the following management aspects would be implemented:</p>
+  <ul>
+    <li><strong>Identity and Access Management (IAM)</strong>:
+      <ul>
+        <li>Use IAM roles and policies for infrastructure and application security.</li>
+        <li>Integrate AWS Cognito or Ping Identity for user authentication.</li>
+        <li>Enforce Multi-Factor Authentication (MFA) and least-privilege access policies.</li>
+      </ul>
+    </li>
+    <li><strong>Network Management (Security)</strong>:
+      <ul>
+        <li>Set up a Virtual Private Cloud (VPC) for network isolation.</li>
+        <li>Implement ingress and egress controls, firewalls, VPNs, and WAF.</li>
+        <li>Use AWS Shield and IDS/IPS systems for enhanced DDoS protection.</li>
+      </ul>
+    </li>
+    <li><strong>Application Management</strong>:
+      <ul>
+        <li>Implement microservices architecture, with each service hosted in its own repository.</li>
+        <li>Use Docker for containerization, with multi-stage builds.</li>
+        <li>Deploy services to ECS (Elastic Container Service) or EKS (Elastic Kubernetes Service).</li>
+      </ul>
+    </li>
+    <li><strong>Data Management</strong>:
+      <ul>
+        <li>Implement secure and scalable databases for structured, semi-structured, and unstructured data hosting.</li>
+      </ul>
+    </li>
+    <li><strong>Backup Management</strong>:
+      <ul>
+        <li>Establish a robust backup and disaster recovery strategy for both data and application components.</li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>Disclaimer</h2>
+  <p>AI has been used to improve the readability of this page.</p>
+</section>
+
+<footer>
+  <p>&copy; 2025 My Static Website on Amazon S3. All Rights Reserved.</p>
+</footer>
+
 </body>
 </html>
